@@ -1,6 +1,9 @@
 .fixture {
     max-width: 30rem;
     margin: auto;
+    position: relative; /* Posición relativa para alinear elementos absolutos */
+    min-height: 100vh; /* Mínimo alto de la página */
+    padding: 20px;
 }
 
 @media (max-width:560px){
