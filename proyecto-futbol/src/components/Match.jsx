@@ -14,7 +14,7 @@ export const Match = ( {match} ) => {
     const away_name     = match.teams.away.name
     const away_logo     = match.teams.away.logo
     const away_score    = match.goals.away
-
+console.log(match)
     return (
         <Link to={`/match/${id}`}>
             <div className="match">

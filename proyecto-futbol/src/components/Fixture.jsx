@@ -1,6 +1,6 @@
 import {Match} from "./Match"
 import {getUrl} from "../utils/conexionAPI.js"
-import{useState,useEffect} from "react"
+import {useState,useEffect} from "react"
 
 
 import "./Fixture.css"
@@ -26,7 +26,25 @@ export const Fixture = () => {
     const league_id = 9 // Copa America
     const season   = 2024
 
-    const [fixture,setFixture] = useState([])
+    const [groupsFixture, setGroupsFixture] = useState({
+        A: [],
+        B: [],
+        C: [],
+        D: []
+    })
+
+    const groups = {
+        A: ["Argentina", "Canada", "Chile", "Peru"],
+        B: ["Venezuela", "Ecuador", "Mexico", "Jamaica"],
+        C: ["Uruguay", "Panama", "USA", "Bolivia"],
+        D: ["Colombia", "Brazil", "Costa Rica", "Paraguay"]
+    }
+    const groupRounds = [
+        "Group Stage - 1",
+        "Group Stage - 2",
+        "Group Stage - 3"
+    ]
+    
 
     useEffect( () => {
 
@@ -34,16 +52,38 @@ export const Fixture = () => {
         getUrl(`/fixtures?league=${league_id}&season=${season}`).then( (data) => {
             const matches = data.response
             console.log(matches) 
-            setFixture(matches)
+
+            matches.map( (match) => {
+                const homeTeam = match.teams.home.name
+                const round = match.league.round
+
+                // Buscar a qué grupo pertenece el equipo local (home)
+                Object.keys(groups).forEach(groupKey => {
+                    if (groups[groupKey].includes(homeTeam) && groupRounds.includes(round)) {
+                        groupsFixture[groupKey].push(match);
+                    }
+                });
+            })
+
+            console.log(groupsFixture) 
+            setGroupsFixture(groupsFixture)
         })
 
     },[])
 
     return (
         <div className="fixture">
-            {fixture.map( (match) => (
-                <Match key={match.fixture.id} match={match} />
-            ) )}
+            {
+                Object.keys(groupsFixture).map(groupKey => (
+                    <div className="group" key={groupKey}>
+                        <h2>Grupo {groupKey}</h2> 
+                        {groupsFixture[groupKey].map(match => (
+                            <Match key={match.fixture.id} match={match} />
+                        ))}
+                        
+                    </div>
+                ))
+            }
         </div>
     )
     
