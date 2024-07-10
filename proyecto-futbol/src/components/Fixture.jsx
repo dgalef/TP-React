@@ -4,6 +4,7 @@ import {useState,useEffect} from "react"
 
 
 import "./Fixture.css"
+import "./loader.css"
 
 // Get all available rounds from one {league} & {season}
 // get("https://v3.football.api-sports.io/fixtures/rounds?league=39&season=2019");
@@ -22,69 +23,81 @@ flag: "https://media.api-sports.io/flags/ar.svg"
 */
 
 export const Fixture = () => {
-
-    const league_id = 9 // Copa America
-    const season   = 2024
+    const league_id = 9; // Copa America
+    const season = 2024;
 
     const [groupsFixture, setGroupsFixture] = useState({
         A: [],
         B: [],
         C: [],
-        D: []
-    })
+        D: [],
+    });
+
+    const [loading, setLoading] = useState(true); // Estado de carga inicialmente true
 
     const groups = {
         A: ["Argentina", "Canada", "Chile", "Peru"],
         B: ["Venezuela", "Ecuador", "Mexico", "Jamaica"],
         C: ["Uruguay", "Panama", "USA", "Bolivia"],
-        D: ["Colombia", "Brazil", "Costa Rica", "Paraguay"]
-    }
-    const groupRounds = [
-        "Group Stage - 1",
-        "Group Stage - 2",
-        "Group Stage - 3"
-    ]
-    
+        D: ["Colombia", "Brazil", "Costa Rica", "Paraguay"],
+    };
 
-    useEffect( () => {
+    const groupRounds = ["Group Stage - 1", "Group Stage - 2", "Group Stage - 3"];
 
-        // Obtengo el listado completo de partidos
-        getUrl(`/fixtures?league=${league_id}&season=${season}`).then( (data) => {
-            const matches = data.response
-            console.log(matches) 
+    useEffect(() => {
+        // Obtener el listado completo de partidos
+        getUrl(`/fixtures?league=${league_id}&season=${season}`)
+            .then((data) => {
+                const matches = data.response;
+                console.log(matches);
 
-            matches.map( (match) => {
-                const homeTeam = match.teams.home.name
-                const round = match.league.round
+                const updatedGroupsFixture = {
+                    A: [],
+                    B: [],
+                    C: [],
+                    D: [],
+                };
 
-                // Buscar a qué grupo pertenece el equipo local (home)
-                Object.keys(groups).forEach(groupKey => {
-                    if (groups[groupKey].includes(homeTeam) && groupRounds.includes(round)) {
-                        groupsFixture[groupKey].push(match);
-                    }
+                matches.forEach((match) => {
+                    const homeTeam = match.teams.home.name;
+                    const round = match.league.round;
+
+                    // Buscar a qué grupo pertenece el equipo local (home)
+                    Object.keys(groups).forEach((groupKey) => {
+                        if (groups[groupKey].includes(homeTeam) && groupRounds.includes(round)) {
+                            updatedGroupsFixture[groupKey].push(match);
+                        }
+                    });
                 });
+
+                console.log(updatedGroupsFixture);
+                setGroupsFixture(updatedGroupsFixture); // Actualizar el estado de los resultados de partidos
             })
-
-            console.log(groupsFixture) 
-            setGroupsFixture(groupsFixture)
-        })
-
-    },[])
+            .finally(() => {
+                setLoading(false); // Cuando la solicitud finaliza (ya sea con éxito o error), set loading a false
+            });
+    }, []); // Dependencia vacía para que se ejecute una vez al montar
 
     return (
         <div className="fixture">
-            {
-                Object.keys(groupsFixture).map(groupKey => (
+            {/* Rueda de carga centrada */}
+            {loading && (
+                <div className="loader-overlay">
+                    <div className="loader"></div>
+                </div>
+            )}
+
+            {/* Contenido principal */}
+            <div className="content">
+                {Object.keys(groupsFixture).map((groupKey) => (
                     <div className="group" key={groupKey}>
-                        <h2>Grupo {groupKey}</h2> 
-                        {groupsFixture[groupKey].map(match => (
+                        <h2>Grupo {groupKey}</h2>
+                        {groupsFixture[groupKey].map((match) => (
                             <Match key={match.fixture.id} match={match} />
                         ))}
-                        
                     </div>
-                ))
-            }
+                ))}
+            </div>
         </div>
-    )
-    
-}
+    );
+};
