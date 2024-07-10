@@ -1,0 +1,56 @@
+
+.match {
+    background-color: white;
+    display: flex;
+    gap: .25rem;
+    border: 1px solid #ccc;
+    margin-bottom: 1rem;
+    padding: 0 .75rem;
+    border-radius: 5rem;    
+    transition: all .3s ease;
+    color: black;
+}
+
+.match:hover {
+    box-shadow: 0 0 .5rem rgba(0,0,0,.2);
+}
+
+.match > div {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+}
+
+.match .away {
+    justify-content: flex-end;
+    flex-direction: row-reverse;
+}
+
+.match .home .name {
+    text-align: left;
+    padding: .25rem 0;
+}
+
+.match .away .name {
+    text-align: right;
+}
+
+.match .logo {
+    width: 2rem;
+    margin: .25rem;
+}
+
+.match .name {
+    font-weight: bold;
+    flex: 1;
+}
+
+.match .score {
+    font-size: 1.5em;
+    font-weight: bold;
+    background-color: #ccc;
+    padding: .5rem;
+    width: 2.5rem;
+    text-align: center;
+}
