@@ -1,7 +1,6 @@
 import {Match} from "./Match"
-import {getUrl} from "../utils/conexionAPI.js"
+import {getData} from "../utils/conexionAPI.js"
 import {useState,useEffect} from "react"
-
 
 import "./Fixture.css"
 import "./loader.css"
@@ -45,49 +44,51 @@ export const Fixture = () => {
     const groupRounds = ["Group Stage - 1", "Group Stage - 2", "Group Stage - 3"];
 
     useEffect(() => {
-        // Obtener el listado completo de partidos
-        getUrl(`/fixtures?league=${league_id}&season=${season}`)
-            .then((data) => {
-                const matches = data.response;
-                console.log(matches);
 
-                const updatedGroupsFixture = {
-                    A: [],
-                    B: [],
-                    C: [],
-                    D: [],
-                };
+        const fetchData = async () => {
+            const data = await getData(`/fixtures?league=${league_id}&season=${season}`);
+            const matches = data.response;
+            console.log(matches);
 
-                matches.forEach((match) => {
-                    const homeTeam = match.teams.home.name;
-                    const round = match.league.round;
+            const updatedGroupsFixture = {
+                A: [],
+                B: [],
+                C: [],
+                D: [], 
+            };
 
-                    // Buscar a qué grupo pertenece el equipo local (home)
-                    Object.keys(groups).forEach((groupKey) => {
-                        if (groups[groupKey].includes(homeTeam) && groupRounds.includes(round)) {
-                            updatedGroupsFixture[groupKey].push(match);
-                        }
-                    });
+            matches.forEach((match) => {
+                const homeTeam = match.teams.home.name;
+                const round = match.league.round;
+
+                // Buscar a qué grupo pertenece el equipo local (home)
+                Object.keys(groups).forEach((groupKey) => {
+                    if (groups[groupKey].includes(homeTeam) && groupRounds.includes(round)) {
+                        updatedGroupsFixture[groupKey].push(match);
+                    }
                 });
-
-                console.log(updatedGroupsFixture);
-                setGroupsFixture(updatedGroupsFixture); // Actualizar el estado de los resultados de partidos
-            })
-            .finally(() => {
-                setLoading(false); // Cuando la solicitud finaliza (ya sea con éxito o error), set loading a false
             });
+
+            console.log(updatedGroupsFixture);
+            setGroupsFixture(updatedGroupsFixture); // Actualizar el estado de los resultados de partidos
+            setLoading(false);
+        };
+
+        fetchData();
+
     }, []); // Dependencia vacía para que se ejecute una vez al montar
 
+   
     return (
         <div className="fixture">
-            {/* Rueda de carga centrada */}
+         
             {loading && (
                 <div className="loader-overlay">
                     <div className="loader"></div>
                 </div>
             )}
 
-            {/* Contenido principal */}
+            
             <div className="content">
                 {Object.keys(groupsFixture).map((groupKey) => (
                     <div className="group" key={groupKey}>
@@ -100,4 +101,5 @@ export const Fixture = () => {
             </div>
         </div>
     );
+    
 };
