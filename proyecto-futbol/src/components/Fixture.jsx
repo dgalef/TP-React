@@ -198,7 +198,7 @@ flag: "https://media.api-sports.io/flags/ar.svg"
     useEffect(() => {
 
         const fetchData = async () => {
-            const data = await getData(`/fixtures?league=${league_id}&season=${season}`);
+            const data = await getData(`/fixtures?league=${league_id}&season=${season}`, "api_fixture");
             const matches = data.response;
             console.log(matches);
 
