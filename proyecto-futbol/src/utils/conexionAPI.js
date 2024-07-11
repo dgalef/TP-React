@@ -1,5 +1,5 @@
 const API = "https://v3.football.api-sports.io"
-const cacheKey = 'api_fixture';
+//const cacheKey = 'api_fixture';
 const cacheTTL = 3600 * 1000; // Tiempo de vida del caché en milisegundos (1 hora)
 
 const fetchFromApi = async (path) => {
@@ -33,7 +33,8 @@ const writeCache = (key, data) => {
     localStorage.setItem(key, JSON.stringify(cacheData));
   };
 
-export const getData = async (path, cachekey) => {
+
+export const getData = async (path, cacheKey) => {
     const cachedData = readCache(cacheKey);
 
     if (cachedData) {
