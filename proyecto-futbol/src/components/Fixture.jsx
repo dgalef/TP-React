@@ -66,7 +66,7 @@ export const Fixture = () => {
 
             setGroupsFixture(updatedGroupsFixture);
 
-            const knockoutData = await getData(`/knockout?league=${league_id}&season=${season}`);
+            const knockoutData = await getData(`/fixtures?league=${league_id}&season=${season}`);
             const knockoutMatches = knockoutData.response;
 
             const updatedKnockoutFixture = {
