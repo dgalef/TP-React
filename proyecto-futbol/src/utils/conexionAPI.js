@@ -5,7 +5,7 @@ const cacheTTL = 3600 * 1000; // Tiempo de vida del caché en milisegundos (1 ho
 const fetchFromApi = async (path) => {
     const response = await fetch(API + path, {
         headers: {
-            'x-rapidapi-key': 'a90c31bc19220e658bbc24277864b411',   // Esta API key tiene un limite diario de 100 consultas
+            'x-rapidapi-key': '6c3618a24b636f39602d1687d6621a68',   // Esta API key tiene un limite diario de 100 consultas
             'x-rapidapi-host': 'v3.football.api-sports.io'
         }
     });
