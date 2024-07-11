@@ -33,7 +33,7 @@ const writeCache = (key, data) => {
     localStorage.setItem(key, JSON.stringify(cacheData));
   };
 
-export const getData = async (path) => {
+export const getData = async (path, cachekey) => {
     const cachedData = readCache(cacheKey);
 
     if (cachedData) {

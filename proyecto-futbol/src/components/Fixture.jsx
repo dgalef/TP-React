@@ -39,7 +39,7 @@ export const Fixture = () => {
     useEffect(() => {
 
         const fetchData = async () => {
-            const groupsData = await getData(`/fixtures?league=${league_id}&season=${season}`);
+            const groupsData = await getData(`/fixtures?league=${league_id}&season=${season}`, "api_fixture");
             const groupMatches = groupsData.response;
 
             const updatedGroupsFixture = {
