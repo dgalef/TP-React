@@ -70,6 +70,12 @@ export const Fixture = () => {
             });
 
             console.log(updatedGroupsFixture);
+
+            updatedGroupsFixture.A.sort((a, b) => new Date(a.fixture.date) - new Date(b.fixture.date));
+            updatedGroupsFixture.B.sort((a, b) => new Date(a.fixture.date) - new Date(b.fixture.date));
+            updatedGroupsFixture.C.sort((a, b) => new Date(a.fixture.date) - new Date(b.fixture.date));
+            updatedGroupsFixture.D.sort((a, b) => new Date(a.fixture.date) - new Date(b.fixture.date));
+
             setGroupsFixture(updatedGroupsFixture); // Actualizar el estado de los resultados de partidos
             setLoading(false);
         };

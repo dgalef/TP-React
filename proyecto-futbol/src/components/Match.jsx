@@ -1,10 +1,16 @@
 import {Link} from "react-router-dom"
 import "./Match.css"
+import { format } from 'date-fns';
+import { es } from 'date-fns/locale';
 
 export const Match = ( {match} ) => {
 
     // Fixture ID
     const id            = match.fixture.id
+
+    // Fixture fecha
+    const date          = match.fixture.date
+
     // Equipo local
     const home_name     = match.teams.home.name
     const home_logo     = match.teams.home.logo
@@ -14,8 +20,12 @@ export const Match = ( {match} ) => {
     const away_name     = match.teams.away.name
     const away_logo     = match.teams.away.logo
     const away_score    = match.goals.away
-console.log(match)
+    //console.log(match)
     return (
+        <>
+        <div className="date">
+            {format(new Date(date), "EEEE dd 'de' MMMM", { locale: es })}
+        </div>
         <Link to={`/match/${id}`}>
             <div className="match">
                 <div className="home">
@@ -30,5 +40,6 @@ console.log(match)
                 </div>
             </div>
         </Link>
+        </>
     )
 }
