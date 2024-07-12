@@ -42,11 +42,20 @@ export const Fixture = () => {
             const groupsData = await getData(`/fixtures?league=${league_id}&season=${season}`, "api_fixture");
             const groupMatches = groupsData.response;
 
+            console.log(groupsData);
+
             const updatedGroupsFixture = {
                 A: [],
                 B: [],
                 C: [],
                 D: [],
+            };
+
+            const updatedKnockoutFixture = {
+                quarterFinals: [],
+                semiFinals: [],
+                thirdPlace: [],
+                final: null,
             };
 
             groupMatches.forEach((match) => {
@@ -58,6 +67,16 @@ export const Fixture = () => {
                         updatedGroupsFixture[groupKey].push(match);
                     }
                 });
+
+                if (round === "Quarter-finals") {
+                    updatedKnockoutFixture.quarterFinals.push(match);
+                } else if (round === "Semi-finals") {
+                    updatedKnockoutFixture.semiFinals.push(match);
+                } else if (round === "Third Place") {
+                    updatedKnockoutFixture.thirdPlace.push(match);
+                } else if (round === "Final") {
+                    updatedKnockoutFixture.final = match;
+                }
             });
 
             Object.keys(updatedGroupsFixture).forEach((groupKey) => {
@@ -65,8 +84,10 @@ export const Fixture = () => {
             });
 
             setGroupsFixture(updatedGroupsFixture);
+            setKnockoutFixture(updatedKnockoutFixture);
 
-            const knockoutData = await getData(`/fixtures?league=${league_id}&season=${season}`);
+            /*
+            const knockoutData = await getData(`/knockout?league=${league_id}&season=${season}`);
             const knockoutMatches = knockoutData.response;
 
             const updatedKnockoutFixture = {
@@ -91,6 +112,7 @@ export const Fixture = () => {
             });
 
             setKnockoutFixture(updatedKnockoutFixture);
+            */
 
             setLoading(false);
         };
@@ -149,6 +171,33 @@ export const Fixture = () => {
 };
 
 export default Fixture;
+/*
+<div className="row">
+                    <div className="knockout-stage">
+                        <h2>Quarter-finals</h2>
+                        {knockoutFixture.quarterFinals.map((match) => (
+                            <Match key={match.fixture.id} match={match} />
+                        ))}
+                    </div>
+                    <div className="knockout-stage">
+                        <h2>Semi-finals</h2>
+                        {knockoutFixture.semiFinals.map((match) => (
+                            <Match key={match.fixture.id} match={match} />
+                        ))}
+                    </div>
+                    <div className="knockout-stage third-place-final">
+                        <h2>Tercer Puesto</h2>
+                        {knockoutFixture.thirdPlace.map((match) => (
+                            <Match key={match.fixture.id} match={match} />
+                        ))}
+                        <h2>Final</h2>
+                        {knockoutFixture.final && (
+                            <Match key={knockoutFixture.final.fixture.id} match={knockoutFixture.final} />
+                        )}
+                    </div>
+                </div>
+*/
+
 
 /*import {Match} from "./Match"
 import {getData} from "../utils/conexionAPI.js"

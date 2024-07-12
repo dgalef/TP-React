@@ -1,23 +1,11 @@
-const API ="https://v3.football.api-sports.io"
-export const getData = (path) =>{
-    return fetch (API+path,{
-        headers: {
-            'x-rapidapi-key': 'e802866635be846647badd14e1819ca5',   // Esta API key tiene un limite diario de 100 consultas
-            //'x-rapidapi-key': '6c3618a24b636f39602d1687d6621a68',   // Esta API key tiene un limite diario de 100 consultas
-            'x-rapidapi-host': 'v3.football.api-sports.io'
-          }
-    }).then((results)=>results.json())
-}
-
-
-/*const API = "https://v3.football.api-sports.io"
+const API = "https://v3.football.api-sports.io"
 //const cacheKey = 'api_fixture';
 const cacheTTL = 3600 * 1000; // Tiempo de vida del caché en milisegundos (1 hora)
 
 const fetchFromApi = async (path) => {
     const response = await fetch(API + path, {
         headers: {
-            'x-rapidapi-key': '6c3618a24b636f39602d1687d6621a68',   // Esta API key tiene un limite diario de 100 consultas
+            'x-rapidapi-key': 'abf0415bcf670229015a3366310905e1',   // Esta API key tiene un limite diario de 100 consultas
             'x-rapidapi-host': 'v3.football.api-sports.io'
         }
     });
@@ -62,4 +50,4 @@ export const getData = async (path, cacheKey) => {
 // Leti 6c3618a24b636f39602d1687d6621a68
 // Ale e802866635be846647badd14e1819ca5
 // Emma a90c31bc19220e658bbc24277864b411
-// Germán abf0415bcf670229015a3366310905e1*/
+// Germán abf0415bcf670229015a3366310905e1
