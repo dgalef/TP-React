@@ -9,14 +9,14 @@ export const App = () => {
   return (
     <BrowserRouter>
       <header>
-        <Link to="/TP-React/">
+        <Link to="/">
           <img src={logo} alt="Copa América 2024" className="logo-copa" />
           {/* <h1 className="title">Copa América 2024</h1> */}
         </Link>
       </header>
       <Routes>
-        <Route path="/TP-React/" element={<LandingPage />} />
-        <Route path="match/:matchId" element={<MatchDetails />} />
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/match/:matchId" element={<MatchDetails />} />
       </Routes>
     </BrowserRouter>
   );
