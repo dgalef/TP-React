@@ -4,5 +4,9 @@ import {App} from './App'
 import './index.css'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-    <App />
+    <React.StrictMode>
+    <BrowserRouter basename="/TP-React">
+      <App />
+    </BrowserRouter>
+  </React.StrictMode>
 )
