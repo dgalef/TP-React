@@ -1,0 +1,1 @@
+Nuestro trabajo toma la información de una API (https://www.api-football.com/sports) y pretende mostrar el comporamiento a lo largo del tiempo de los partidos y sus resultados de la Copa América 2024.
