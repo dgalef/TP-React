@@ -75,7 +75,7 @@ export const MatchDetails = () => {
 
 
             </div>
-            <Link to="/TP-React"><button>Volver</button></Link>
+            <Link to="/"><button>Volver</button></Link>
         </>
     )
 }
