@@ -15,7 +15,7 @@ export const App = () => {
         </Link>
       </header>
       <Routes>
-        <Route path="/" element={<LandingPage />} />
+        <Route path="/TP-React" element={<LandingPage />} />
         <Route path="/match/:matchId" element={<MatchDetails />} />
       </Routes>
     </BrowserRouter>
