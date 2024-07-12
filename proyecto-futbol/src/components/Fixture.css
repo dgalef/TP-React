@@ -1,4 +1,5 @@
 .fixture {
+    font-size: .75rem;
     margin: auto;
     position: relative;
     min-height: 100vh; 
@@ -18,12 +19,11 @@
     flex-wrap: wrap; 
 }
 
-.group,
-.knockout-stage {
+.group {
     background: white;
     padding: 1rem;
     border-radius: 2rem;
-    font-size: .75rem;
+    
     width: 21rem;
 }
 
@@ -37,44 +37,34 @@
     font-size: 1rem;
 }
 
+.trophy {
+    width: 4rem;
+    border-radius: .5rem;
+    overflow: hidden;
+    padding: .5rem;
+    background-color: white;
+}
+
 @media (max-width: 560px) {
    .group,
    .knockout-stage {
        width: 100%; 
    }
 }
-/*.fixture {*/
-    /*max-width: 30rem;*//*
-    margin: auto;
-    position: relative; 
-    min-height: 100vh; 
-    padding: 20px;
-}
 
-.content {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 1.5rem;
-}
 
-.group {
-    background: white;
-    padding: 1rem;
-    border-radius: 2rem;
-    font-size: .75rem;
-    width: 21rem;
-}
+@media screen and (min-width: 1024px) {
+    .row.playoffs {
+        gap: 2.5rem;
+    }
 
-.group h2 {
-    margin: 0 0 .8em;
-    background: #E92222;
-    border-radius: 3rem;
-    padding: .3em;
-    color: white;
-    font-size: 1rem;
+    .trophy {
+        width: 5rem;
+        padding: 1rem;
+        border-radius: 1rem;
+        position: absolute;
+        left: 50%;
+        top: 4rem;
+        transform: translateX(-50%);
+    }
 }
-
-@media (max-width:560px){
-   
-}*/

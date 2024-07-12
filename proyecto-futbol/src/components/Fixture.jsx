@@ -2,7 +2,7 @@ import {Match} from "./Match"
 import {getData} from "../utils/conexionAPI.js"
 import {useState,useEffect} from "react"
 
-
+import copaImg from "../assets/COPA_America_Trophy.jpg" 
 import "./Fixture.css"
 import "./loader.css"
 
@@ -20,7 +20,7 @@ export const Fixture = () => {
     const [knockoutFixture, setKnockoutFixture] = useState({
         quarterFinals: [],
         semiFinals: [],
-        thirdPlace: [],
+        thirdPlace: null,
         final: null,
     });
 
@@ -54,7 +54,7 @@ export const Fixture = () => {
             const updatedKnockoutFixture = {
                 quarterFinals: [],
                 semiFinals: [],
-                thirdPlace: [],
+                thirdPlace: null,
                 final: null,
             };
 
@@ -72,8 +72,8 @@ export const Fixture = () => {
                     updatedKnockoutFixture.quarterFinals.push(match);
                 } else if (round === "Semi-finals") {
                     updatedKnockoutFixture.semiFinals.push(match);
-                } else if (round === "Third Place") {
-                    updatedKnockoutFixture.thirdPlace.push(match);
+                } else if (round === "3rd Place Final") {
+                    updatedKnockoutFixture.thirdPlace = match;
                 } else if (round === "Final") {
                     updatedKnockoutFixture.final = match;
                 }
@@ -85,34 +85,6 @@ export const Fixture = () => {
 
             setGroupsFixture(updatedGroupsFixture);
             setKnockoutFixture(updatedKnockoutFixture);
-
-            /*
-            const knockoutData = await getData(`/knockout?league=${league_id}&season=${season}`);
-            const knockoutMatches = knockoutData.response;
-
-            const updatedKnockoutFixture = {
-                quarterFinals: [],
-                semiFinals: [],
-                thirdPlace: [],
-                final: null,
-            };
-
-            knockoutMatches.forEach((match) => {
-                const round = match.league.round;
-
-                if (round === "Quarter-finals") {
-                    updatedKnockoutFixture.quarterFinals.push(match);
-                } else if (round === "Semi-finals") {
-                    updatedKnockoutFixture.semiFinals.push(match);
-                } else if (round === "Third Place") {
-                    updatedKnockoutFixture.thirdPlace.push(match);
-                } else if (round === "Final") {
-                    updatedKnockoutFixture.final = match;
-                }
-            });
-
-            setKnockoutFixture(updatedKnockoutFixture);
-            */
 
             setLoading(false);
         };
@@ -141,27 +113,37 @@ export const Fixture = () => {
                     ))}
                 </div>
 
-                <div className="row">
-                    <div className="knockout-stage">
-                        <h2>Quarter-finals</h2>
+                <div className="row playoffs">
+                    <div className="knockout-stage quarter">
+                        <h2>Cuartos de final</h2>
                         {knockoutFixture.quarterFinals.map((match) => (
-                            <Match key={match.fixture.id} match={match} />
+                            <div className="match-wrapper">
+                                <Match key={match.fixture.id} match={match} />
+                            </div>
                         ))}
                     </div>
-                    <div className="knockout-stage">
-                        <h2>Semi-finals</h2>
+                    <div className="knockout-stage semifinals">
+                        <h2>Semifinales</h2>
                         {knockoutFixture.semiFinals.map((match) => (
-                            <Match key={match.fixture.id} match={match} />
+                            <div className="match-wrapper">
+                                <Match key={match.fixture.id} match={match} />
+                            </div>
                         ))}
                     </div>
                     <div className="knockout-stage third-place-final">
-                        <h2>Tercer Puesto</h2>
-                        {knockoutFixture.thirdPlace.map((match) => (
-                            <Match key={match.fixture.id} match={match} />
-                        ))}
+                        <h2 className="third-place-heading">Tercer Puesto</h2>
+                        {knockoutFixture.thirdPlace && (
+                            <div className="match-wrapper third-place">
+                            <Match key={knockoutFixture.thirdPlace.fixture.id} match={knockoutFixture.thirdPlace} />
+                            </div>
+                        )}
+                      
                         <h2>Final</h2>
+                        <img src={copaImg} className="trophy" />
                         {knockoutFixture.final && (
+                            <div className="match-wrapper final"> 
                             <Match key={knockoutFixture.final.fixture.id} match={knockoutFixture.final} />
+                            </div>
                         )}
                     </div>
                 </div>
@@ -169,35 +151,6 @@ export const Fixture = () => {
         </div>
     );
 };
-
-export default Fixture;
-/*
-<div className="row">
-                    <div className="knockout-stage">
-                        <h2>Quarter-finals</h2>
-                        {knockoutFixture.quarterFinals.map((match) => (
-                            <Match key={match.fixture.id} match={match} />
-                        ))}
-                    </div>
-                    <div className="knockout-stage">
-                        <h2>Semi-finals</h2>
-                        {knockoutFixture.semiFinals.map((match) => (
-                            <Match key={match.fixture.id} match={match} />
-                        ))}
-                    </div>
-                    <div className="knockout-stage third-place-final">
-                        <h2>Tercer Puesto</h2>
-                        {knockoutFixture.thirdPlace.map((match) => (
-                            <Match key={match.fixture.id} match={match} />
-                        ))}
-                        <h2>Final</h2>
-                        {knockoutFixture.final && (
-                            <Match key={knockoutFixture.final.fixture.id} match={knockoutFixture.final} />
-                        )}
-                    </div>
-                </div>
-*/
-
 
 /*import {Match} from "./Match"
 import {getData} from "../utils/conexionAPI.js"

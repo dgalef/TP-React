@@ -3,6 +3,7 @@ import { getData } from "../utils/conexionAPI.js"
 import { useState, useEffect } from "react"
 import { useParams } from "react-router-dom"
 
+import "./MatchDetails.css"
 
 export const MatchDetails = () => {
 
@@ -10,6 +11,8 @@ export const MatchDetails = () => {
         home: {},
         away: {}
     });
+
+    const [match, setMatch] = useState({});
     const [loading, setLoading] = useState(true); 
 
     const { matchId }       = useParams()
@@ -18,7 +21,8 @@ export const MatchDetails = () => {
 
         const fetchData = async () => {
 
-            const data = await getData(`/fixtures/lineups?fixture=${matchId}`, "api_match");
+            const matchData = await getData(`/fixtures?id=${matchId}`, `api_match_${matchId}`);
+            const lineupData = await getData(`/fixtures/lineups?fixture=${matchId}`, `api_lineup_${matchId}`);
             //console.log(data);
 
             const updatedTeams = {
@@ -26,11 +30,15 @@ export const MatchDetails = () => {
                 away: {}
             };
 
-            updatedTeams.home = data.response[0];
-            updatedTeams.away = data.response[1]; 
-            console.log(updatedTeams.away)
-            setTeams(updatedTeams);
+            updatedTeams.home = lineupData.response[0];
+            updatedTeams.away = lineupData.response[1]; 
             
+            console.log(updatedTeams)
+            console.log(matchData)
+            
+            setTeams(updatedTeams);
+            setMatch(matchData.response[0])
+
             setLoading(false);
         };
 
@@ -46,14 +54,20 @@ export const MatchDetails = () => {
         <>
             <div className="matchCard">
             <div className="team homeTeam">
-                    <div className="teamName">{teams.home.team.name}</div>
+                    <div className="teamName">
+                        {teams.home.team.name}
+                        <div className="score">{match.goals.home}</div>
+                    </div>
                     { teams.home.startXI.map( (player) => (
                         <div className="player" key={player.player.id}>{player.player.name}</div>
                     ))}
                 </div>
 
                 <div className="team awayTeam">
-                    <div className="teamName">{teams.away.team.name}</div>
+                    <div className="teamName">
+                        {teams.away.team.name}
+                        <div className="score">{match.goals.away}</div>
+                    </div>
                     { teams.away.startXI.map( (player) => (
                         <div className="player" key={player.player.id}>{player.player.name}</div>
                     ))}
@@ -65,7 +79,3 @@ export const MatchDetails = () => {
         </>
     )
 }
-
-/*
-                
-*/
