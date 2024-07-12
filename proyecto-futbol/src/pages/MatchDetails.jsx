@@ -47,7 +47,7 @@ export const MatchDetails = () => {
     }, []);
 
     if (loading) {
-        return <div>Loading...</div>; // Muestra un mensaje de carga mientras los datos se están obteniendo
+        return <div>Cargando...</div>; // Muestra un mensaje de carga mientras los datos se están obteniendo
     }
 
     return (
